@@ -11,14 +11,16 @@ var (
 	YourName, YourCompany, YourTitle, YourSocial, ProfilePic string
 )
 
-var profileImg []uint8
-var profileErr error
+var (
+	profileImg []uint8
+	profileErr error
+)
 
 const (
-	DefaultCompany = "TinyGo"
-	DefaultName    = "CONEJO"
-	DefaultTitle   = "Technologist for hire"
-	DefaultSocial  = "@conejo@social.tinygo.org"
+	DefaultCompany = "ADAtomic, Inc."
+	DefaultName    = "taigrr"
+	DefaultTitle   = "Senior Software Engineer"
+	DefaultSocial  = "x.com: @warptux"
 )
 
 type Talk struct {
@@ -31,13 +33,15 @@ type Day struct {
 }
 
 var scheduleData = []Day{
-	{"Sunday July 7 (TZ CDT)",
+	{
+		"Sunday July 7 (TZ CDT)",
 		[]Talk{
 			{"12:00", "18:00", "", "Registration & Gopher Gear Shop", ""},
 			{"14:00", "18:00", "Women Who Go Meetup", "Cassie Coyle, Samantha Coyle", "Angelica Hill, Jenniger Johnson"},
 		},
 	},
-	{"Monday July 8 (TZ CDT)",
+	{
+		"Monday July 8 (TZ CDT)",
 		[]Talk{
 			{"07:00", "17:30", "", "Registration & Gopher Gear Shop", ""},
 			{"07:30", "10:30", "", "Continental breakfast", ""},
@@ -65,7 +69,8 @@ var scheduleData = []Day{
 			{"19:00", "21:00", "RainGo connection meetup", "Joe Harman, Angelica Hill", "Thomas Lyons, Kate Pond"},
 		},
 	},
-	{"Tuesday July 9 (TZ CDT)",
+	{
+		"Tuesday July 9 (TZ CDT)",
 		[]Talk{
 			{"07:30", "19:00", "", "Registration & Gopher Gear Shop", ""},
 			{"08:00", "10:15", "", "Coffee with the exhibitors", ""},
@@ -93,7 +98,8 @@ var scheduleData = []Day{
 			{"19:00", "21:00", "United Go meetup", "Johnny Boursiquot, Kate Pond,", "Wilken Rivera"},
 		},
 	},
-	{"Wednesday July 10 (TZ CDT)",
+	{
+		"Wednesday July 10 (TZ CDT)",
 		[]Talk{
 			{"08:00", "10:30", "", "Coffee with the exhibitors", ""},
 			{"08:00", "16:00", "Challenge series: Dial Up the nostalgia", "Neil Primmer, Benji Vesterby", "(free but requires registration)"},
@@ -140,7 +146,6 @@ func setCustomData() {
 	}
 
 	profileImg, profileErr = base64.StdEncoding.DecodeString(ProfilePic)
-
 }
 
 type Scene struct {

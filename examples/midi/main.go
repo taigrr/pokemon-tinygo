@@ -14,14 +14,20 @@ import (
 
 const MIDICHANNEL = 10
 
-var display uc8151.Device
-var btnA, btnB, btnC, btnUp, btnDown machine.Pin
+var (
+	display                          uc8151.Device
+	btnA, btnB, btnC, btnUp, btnDown machine.Pin
+)
 
-var black = color.RGBA{1, 1, 1, 255}
-var white = color.RGBA{0, 0, 0, 255}
+var (
+	black = color.RGBA{1, 1, 1, 255}
+	white = color.RGBA{0, 0, 0, 255}
+)
 
-const WIDTH = 296
-const HEIGHT = 128
+const (
+	WIDTH  = 296
+	HEIGHT = 128
+)
 
 func main() {
 	usb.Product = "Badger Drum"

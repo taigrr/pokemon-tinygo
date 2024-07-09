@@ -3,17 +3,17 @@ package main
 import (
 	"image/color"
 	"math/rand"
+	"time"
+
+	qrcode "github.com/skip2/go-qrcode"
 
 	"github.com/conejoninja/badger2040/tetris"
-	qrcode "github.com/skip2/go-qrcode"
 
 	"tinygo.org/x/tinyfont/proggy"
 
 	"tinygo.org/x/tinyfont/freesans"
 
 	"tinygo.org/x/tinyfont/gophers"
-
-	"time"
 
 	"tinygo.org/x/tinydraw"
 	"tinygo.org/x/tinyfont"
@@ -52,7 +52,7 @@ func badgeProfile() {
 	display.ClearBuffer()
 	midW := int16(176)
 	if profileErr == nil {
-		display.DrawBuffer(0, 0, 128, 120, []uint8(profileImg))
+		display.DrawBuffer(0, 0, 128, 120, []uint8(custProfileImg))
 	}
 
 	showRect(0, 0, midW, 30, black)
@@ -232,7 +232,6 @@ func sunrays() {
 		display.Display()
 		display.WaitUntilIdle()
 	}
-
 }
 
 func rays(color color.RGBA) {
@@ -284,7 +283,6 @@ func loading() {
 
 	display.Display()
 	display.WaitUntilIdle()
-
 }
 
 func loadingInverted() {
@@ -302,7 +300,7 @@ func loadingInverted() {
 		display.WaitUntilIdle()
 	}
 
-	//THE LAS ONE IS DIFFERENT SIZE
+	// THE LAS ONE IS DIFFERENT SIZE
 	// this is the opposite, we draw the text and draw a rectangle of the same color as the background
 	// to make the ilusion the text is revealing
 	w32, _ := tinyfont.LineWidth(&freesans.Bold24pt7b, "TinyGo")
@@ -359,7 +357,7 @@ func dvd(text string) {
 
 	w32, _ := tinyfont.LineWidth(&freesans.Bold24pt7b, text)
 	maxW := int16(WIDTH - w32)
-	maxH := int16(HEIGHT - 36) //assume line height is 36
+	maxH := int16(HEIGHT - 36) // assume line height is 36
 
 	// random start point
 	x := int16(rand.Int31n(int32(maxW)))
@@ -368,16 +366,16 @@ func dvd(text string) {
 	dx := d
 	dy := d
 
-	for i := 0; i < 80; i++ { //duration 80 frames
+	for i := 0; i < 80; i++ { // duration 80 frames
 		// paint white the previous text to "erase" it
-		tinyfont.WriteLine(&display, &freesans.Bold24pt7b, x, y+36, "TinyGo", white)
+		tinyfont.WriteLine(&display, &freesans.Bold24pt7b, x, y+36, text, white)
 
 		// move text
 		x += dx
 		y += dy
 
 		// paint and show text
-		tinyfont.WriteLine(&display, &freesans.Bold24pt7b, x, y+36, "TinyGo", black)
+		tinyfont.WriteLine(&display, &freesans.Bold24pt7b, x, y+36, text, black)
 		display.Display()
 		display.WaitUntilIdle()
 
