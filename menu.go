@@ -14,6 +14,7 @@ func menu() int16 {
 		"GopherCone Schedule",
 		"GopherCon Adventure",
 		"Demo",
+		"PokemonTinyGo",
 	}
 
 	display.ClearBuffer()

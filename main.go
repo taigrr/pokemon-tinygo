@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"tinygo.org/x/drivers/uc8151"
+	"github.com/conejoninja/badger2040/pokemon"
 )
 
 var display uc8151.Device
@@ -66,6 +67,9 @@ func main() {
 			break
 		case 3:
 			demo()
+			break
+		case 4:
+			pokemon.Go(display)
 			break
 		default:
 			break
