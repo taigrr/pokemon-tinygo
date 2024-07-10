@@ -4,3 +4,4 @@ image.go
 *.webp
 *-generated.go
 *.bin
+gopherbadgeimg

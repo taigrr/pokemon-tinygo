@@ -29,7 +29,6 @@ var (
 )
 
 func main() {
-	// s
 	flag.BoolVar(&disableDithering, "disable-dithering", false, "disables dithering")
 	flag.BoolVar(&show, "show", false, "paints dot-matrix-style art to the screen representing the image")
 	flag.StringVar(
@@ -70,12 +69,12 @@ func main() {
 
 	var x, y int
 	switch ratio {
-	// profile image is 128x128
 	case "profile":
-		imgBits = ImgToBytes(120, 128, sourceImage)
-	// splash image is 246x128
+		// profile image is 128x128
+		x, y = 120, 128
 	case "splash":
-		imgBits = ImgToBytes(246, 128, sourceImage)
+		// splash image is 246x128
+		x, y = 246, 128
 	case "":
 		log.Println("error: a ratio must be provided.\n")
 		Usage()
@@ -97,8 +96,8 @@ func main() {
 			return
 		}
 
-		imgBits = ImgToBytes(x, y, sourceImage)
 	}
+	imgBits = ImgToBytes(x, y, sourceImage)
 	switch outMode {
 	case "rice":
 		err = WriteToGoFile(fmt.Sprintf("%s-generated.go", ratio), ratio, imgBits)
@@ -113,11 +112,11 @@ func main() {
 	case "base64":
 		fmt.Println(EncodeToString(imgBits))
 	case "none":
+		// this option is useful if you want to preview the file without creating it
 	default:
-		log.Printf("error: invalid mode `%s`\n", outMode)
+		log.Printf("error: invalid mode `%s`\n\n", outMode)
 		Usage()
 		return
-		// rice, bin, base64 none
 	}
 	if show {
 		PrintImg(x, y, imgBits)
@@ -284,8 +283,8 @@ func Usage() {
 //
 // It writes to stderr so that it doesn't conflict with the base64 output
 func PrintImg(x, y int, imgBits []byte) {
-	for j := 0; j < x; j++ {
-		for i := 0; i < y; i++ {
+	for i := 0; i < y; i++ {
+		for j := 0; j < x; j++ {
 			offset := j*y + i
 			bit := imgBits[offset/8] & (1 << uint(7-offset%8))
 			if bit != 0 {
