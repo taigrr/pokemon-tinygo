@@ -28,8 +28,8 @@ var spritePikachu []uint8
 //go:embed assets/bulbasaur.bin
 var spriteBulbasaur []uint8
 
-//go:embed assets/logo.bin
-var logo []uint8
+//go:embed assets/splash.bin
+var splash []uint8
 
 type Pokemon struct {
 	name     string
@@ -112,7 +112,7 @@ confirm:
 
 func Logo(display uc8151.Device) {
 	display.ClearBuffer()
-	display.DrawBuffer(0, 25, 128, 246, []uint8(logo))
+	display.DrawBuffer(0, 25, 128, 246, []uint8(splash))
 	display.Display()
 	display.WaitUntilIdle()
 }
