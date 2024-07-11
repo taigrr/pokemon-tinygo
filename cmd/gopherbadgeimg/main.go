@@ -50,7 +50,7 @@ func main() {
 		flag.PrintDefaults()
 		fmt.Fprintf(
 			flag.CommandLine.Output(),
-			"\nExamples:\n%s input.png -outmode profile\n%s input.jpg -disable-dithering -show\n",
+			"\nExamples:\n%s -outmode bin -ratio splash tainigo_128.png\n%s -outmode rice -ratio 128x128 -disable-dithering -show image.jpg\n",
 			os.Args[0],
 			os.Args[0],
 		)
