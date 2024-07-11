@@ -36,44 +36,14 @@ func main() {
 		Blocking: true,
 	})
 
-	btnA = machine.BUTTON_A
-	btnB = machine.BUTTON_B
-	btnC = machine.BUTTON_C
-	btnUp = machine.BUTTON_UP
-	btnDown = machine.BUTTON_DOWN
-	btnA.Configure(machine.PinConfig{Mode: machine.PinInputPulldown})
-	btnB.Configure(machine.PinConfig{Mode: machine.PinInputPulldown})
-	btnC.Configure(machine.PinConfig{Mode: machine.PinInputPulldown})
-	btnUp.Configure(machine.PinConfig{Mode: machine.PinInputPulldown})
-	btnDown.Configure(machine.PinConfig{Mode: machine.PinInputPulldown})
+	machine.BUTTON_A.Configure(machine.PinConfig{Mode: machine.PinInputPulldown})
+	machine.BUTTON_B.Configure(machine.PinConfig{Mode: machine.PinInputPulldown})
+	machine.BUTTON_C.Configure(machine.PinConfig{Mode: machine.PinInputPulldown})
+	machine.BUTTON_UP.Configure(machine.PinConfig{Mode: machine.PinInputPulldown})
+	machine.BUTTON_DOWN.Configure(machine.PinConfig{Mode: machine.PinInputPulldown})
 
-	display.ClearBuffer()
-	display.Display()
-	setCustomData()
-
-	tainigoLogo()
+	pokemon.Logo(display)
 	time.Sleep(3 * time.Second)
 
-	for {
-		switch menu() {
-		case 0:
-			profile()
-			break
-		case 1:
-			schedule(0, 0)
-			break
-		case 2:
-			adventure()
-			break
-		case 3:
-			demo()
-			break
-		case 4:
-			pokemon.Go(display)
-			break
-		default:
-			break
-		}
-		time.Sleep(1 * time.Second)
-	}
+	pokemon.Go(display)
 }
