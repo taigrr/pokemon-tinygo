@@ -66,6 +66,19 @@ func NewSelectionModel(display uc8151.Device) SelectionModel {
 }
 
 func Go(display uc8151.Device) {
+	display.ClearBuffer()
+
+	line := "Choose Your"
+	w32, _ := tinyfont.LineWidth(&freesans.Bold24pt7b, line)
+	tinyfont.WriteLine(&display, &freesans.Bold18pt7b, 176-int16(w32)/2, 60, line, black)
+
+	line = "Pokemon!"
+	w32, _ = tinyfont.LineWidth(&freesans.Bold24pt7b, line)
+	tinyfont.WriteLine(&display, &freesans.Bold18pt7b, 176-int16(w32)/2, 88, line, black)
+
+	display.Display()
+	display.WaitUntilIdle()
+
 	m := NewSelectionModel(display)
 
 	for {
@@ -90,20 +103,20 @@ confirm:
 	player := Pokedex[m.selected]
 	opponent := Pokedex[rand.Intn(len(Pokedex))]
 
-	m.display.ClearBuffer()
+	display.ClearBuffer()
 	tinyfont.WriteLine(&display, &freesans.Bold18pt7b, 5, 74, player.name, black)
-	m.display.Display()
-	m.display.WaitUntilIdle()
+	display.Display()
+	display.WaitUntilIdle()
 
-	m.display.ClearBuffer()
+	display.ClearBuffer()
 	tinyfont.WriteLine(&display, &freesans.Bold18pt7b, 5, 74, "VS", black)
-	m.display.Display()
-	m.display.WaitUntilIdle()
+	display.Display()
+	display.WaitUntilIdle()
 
-	m.display.ClearBuffer()
+	display.ClearBuffer()
 	tinyfont.WriteLine(&display, &freesans.Bold18pt7b, 5, 74, opponent.name, black)
-	m.display.Display()
-	m.display.WaitUntilIdle()
+	display.Display()
+	display.WaitUntilIdle()
 }
 
 
