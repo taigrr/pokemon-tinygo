@@ -76,7 +76,7 @@ func main() {
 		// splash image is 246x128
 		x, y = 246, 128
 	case "":
-		log.Println("error: a ratio must be provided.\n")
+		log.Println("error: a ratio must be provided.")
 		Usage()
 		return
 	default:
@@ -236,11 +236,14 @@ func ImgToBytes(x, y int, inputImg *image.Image) []byte {
 	for i := 0; i < x; i++ {
 		for j := 0; j < y; j++ {
 			// grab dithered image point, determine if bit should be 1 or a 0
-			r, g, b, _ := dst.At(i, j).RGBA()
+			r, g, b, _ := dst.At(x-1-i, j).RGBA()
 			if r+g+b == 0 {
 				// use bit shifting + integer division & modulo arithmetic to change
 				// the individual bits we want to set
-				imageBits[(i*y+j)/8] = imageBits[(i*y+j)/8] | (1 << uint(7-(i*y+j)%8))
+				//			imageBits[(i*y+j)/8] = imageBits[(i*y+j)/8] | (1 << uint(7-(i*y+j)%8))
+				index := (i*y + j) / 8
+				bit := uint(7 - (i*y+j)%8)
+				imageBits[index] |= (1 << bit)
 			}
 		}
 	}
@@ -283,9 +286,9 @@ func Usage() {
 //
 // It writes to stderr so that it doesn't conflict with the base64 output
 func PrintImg(x, y int, imgBits []byte) {
-	for i := 0; i < y; i++ {
-		for j := 0; j < x; j++ {
-			offset := j*y + i
+	for j := 0; j < x; j++ {
+		for i := y - 1; i >= 0; i-- {
+			offset := i*x + j
 			bit := imgBits[offset/8] & (1 << uint(7-offset%8))
 			if bit != 0 {
 				fmt.Fprint(os.Stderr, "*")
