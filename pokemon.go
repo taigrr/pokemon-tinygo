@@ -1,8 +1,7 @@
-package pokemon
+package main
 
 import (
 	_ "embed"
-	"image/color"
 	"machine"
 	"math/rand"
 
@@ -16,8 +15,6 @@ const (
 	spriteWidth  = 128
 	spriteHeight = 120
 )
-
-var black = color.RGBA{1, 1, 1, 255}
 
 //go:embed assets/charizard.bin
 var spriteCharlizard []uint8

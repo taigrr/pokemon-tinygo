@@ -6,11 +6,9 @@ import (
 	"time"
 
 	"tinygo.org/x/drivers/uc8151"
-	"github.com/conejoninja/badger2040/pokemon"
 )
 
 var display uc8151.Device
-var btnA, btnB, btnC, btnUp, btnDown machine.Pin
 
 var black = color.RGBA{1, 1, 1, 255}
 var white = color.RGBA{0, 0, 0, 255}
@@ -42,8 +40,8 @@ func main() {
 	machine.BUTTON_UP.Configure(machine.PinConfig{Mode: machine.PinInputPulldown})
 	machine.BUTTON_DOWN.Configure(machine.PinConfig{Mode: machine.PinInputPulldown})
 
-	pokemon.Logo(display)
+	Logo(display)
 	time.Sleep(3 * time.Second)
 
-	pokemon.Go(display)
+	Go(display)
 }
