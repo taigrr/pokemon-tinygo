@@ -117,8 +117,39 @@ confirm:
 	tinyfont.WriteLine(&display, &freesans.Bold18pt7b, 5, 74, opponent.name, black)
 	display.Display()
 	display.WaitUntilIdle()
-}
 
+	display.ClearBuffer()
+	player.Draw(display, 120, 0)
+	opponent.Draw(display, 0, 0)
+	display.Display()
+	display.WaitUntilIdle()
+
+	winner := opponent
+	loser := player
+	blankingOffset := int16(120)
+	if player.WinsAgainst(&opponent) {
+		winner = player
+		loser = opponent
+		blankingOffset = 0
+	}
+
+	flashLoser := func() {
+		display.ClearBuffer()
+		display.DisplayRect(blankingOffset, 0, spriteWidth, spriteHeight)
+		display.WaitUntilIdle()
+		loser.Draw(display, blankingOffset, 0)
+		display.DisplayRect(blankingOffset, 0, spriteWidth, spriteHeight)
+		display.WaitUntilIdle()
+	}
+
+	flashLoser()
+	flashLoser()
+	flashLoser()
+
+	display.ClearBuffer()
+	winner.Draw(display, 60, 0)
+	display.WaitUntilIdle()
+}
 
 func Logo(display uc8151.Device) {
 	display.ClearBuffer()
