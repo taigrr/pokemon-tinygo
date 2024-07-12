@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"machine"
 	"math/rand"
+	"runtime"
 
 	"tinygo.org/x/tinyfont/freesans"
 
@@ -100,6 +101,8 @@ func Go(display uc8151.Device) {
 		case machine.BUTTON_DOWN.Get():
 			bt.Advertise()
 			// return // Exit to menu
+		default:
+			runtime.Gosched()
 		}
 	}
 
