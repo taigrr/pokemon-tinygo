@@ -2,10 +2,13 @@ package main
 
 import (
 	_ "embed"
+	"fmt"
 	"machine"
 	"math/rand"
 
 	"tinygo.org/x/tinyfont/freesans"
+
+	"github.com/conejoninja/badger2040/bt"
 
 	"tinygo.org/x/drivers/uc8151"
 	"tinygo.org/x/tinyfont"
@@ -17,7 +20,7 @@ const (
 )
 
 //go:embed assets/charizard.bin
-var spriteCharlizard []uint8
+var spriteCharizard []uint8
 
 //go:embed assets/pikachu.bin
 var spritePikachu []uint8
@@ -44,9 +47,9 @@ func (p *Pokemon) WinsAgainst(p2 *Pokemon) bool {
 }
 
 var Pokedex = []Pokemon{
-	{"Char Lizard", spriteCharlizard, "fire", "water"},
-	{"Lightning Rat", spritePikachu, "electric", "fire"},
-	{"Water Turtle", spriteBulbasaur, "water", "electric"},
+	{name: "Char Lizard", sprite: spriteCharizard, strength: "fire", weakness: "water"},
+	{name: "Water Turtle", sprite: spriteBulbasaur, strength: "water", weakness: "electric"},
+	{name: "Lightning Rat", sprite: spritePikachu, strength: "electric", weakness: "fire"},
 }
 
 type SelectionModel struct {
@@ -95,11 +98,13 @@ func Go(display uc8151.Device) {
 		case machine.BUTTON_UP.Get():
 			goto confirm // Confirm selection
 		case machine.BUTTON_DOWN.Get():
-			return // Exit to menu
+			bt.Advertise()
+			// return // Exit to menu
 		}
 	}
 
 confirm:
+	fmt.Println("confirmed")
 	player := Pokedex[m.selected]
 	opponent := Pokedex[rand.Intn(len(Pokedex))]
 
@@ -134,6 +139,7 @@ confirm:
 	}
 
 	flashLoser := func() {
+		fmt.Println("loser flashing")
 		display.ClearBuffer()
 		display.DisplayRect(blankingOffset, 0, spriteWidth, spriteHeight)
 		display.WaitUntilIdle()
@@ -151,7 +157,7 @@ confirm:
 	display.WaitUntilIdle()
 }
 
-func Logo(display uc8151.Device) {
+func ShowSplash(display uc8151.Device) {
 	display.ClearBuffer()
 	display.DrawBuffer(0, 25, 128, 246, []uint8(splash))
 	display.Display()

@@ -6,7 +6,7 @@ build: ${target}
 
 .PHONY: ${target}
 ${target}:
-	tinygo build --target=badger2040 --size full --print-allocs=. -o "${target}" --monitor --stack-size=8kb
+	tinygo build --target=badger2040-w --size full --print-allocs=. -o "${target}" --monitor --stack-size=8kb
 
 .PHONY: flash
 flash:
