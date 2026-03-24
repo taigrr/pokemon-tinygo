@@ -260,7 +260,7 @@ func ParseRatio(rstr string) (int, int, error) {
 	if err != nil {
 		return 0, 0, errors.Join(errors.New("error: could not parse x coordinate count"), err)
 	}
-	y, err := strconv.Atoi(pixels[0])
+	y, err := strconv.Atoi(pixels[1])
 	if err != nil {
 		return 0, 0, errors.Join(errors.New("error: could not parse y coordinate count"), err)
 	}

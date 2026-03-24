@@ -1,3 +1,5 @@
+//go:build splashbin
+
 package main
 
 import (
@@ -12,18 +14,17 @@ import (
 // This code allows you to re-convert a bitmap variable file back
 
 // must build and run the program first, and generate a splash.bin file using
-// ./gopherbadgeimg splash <image file here>
+// ./gopherbadgeimg -outmode bin -ratio splash <image file here>
 
 //go:embed splash.bin
 var tainigo []byte
 
-func TestMain(t *testing.T) {
-	decodeToPng()
-}
-
-func decodeToPng() {
+func TestDecodeSplash(t *testing.T) {
 	dst := image.NewRGBA(image.Rect(0, 0, 246, 128))
-	outPng, _ := os.Create("splash.png")
+	outPng, err := os.Create("splash.png")
+	if err != nil {
+		t.Fatalf("failed to create splash.png: %v", err)
+	}
 	defer outPng.Close()
 	for j := 0; j < 246; j++ {
 		for i := 0; i < 128; i++ {
@@ -36,5 +37,7 @@ func decodeToPng() {
 			}
 		}
 	}
-	png.Encode(outPng, dst)
+	if err := png.Encode(outPng, dst); err != nil {
+		t.Fatalf("failed to encode png: %v", err)
+	}
 }
