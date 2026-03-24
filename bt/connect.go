@@ -1,7 +1,6 @@
 package bt
 
 import (
-	"strings"
 	"sync"
 	"time"
 
@@ -60,11 +59,9 @@ func Scan() {
 	println("scanning...")
 	err := adapter.Scan(func(adapter *bluetooth.Adapter, result bluetooth.ScanResult) {
 		println("found device:", result.Address.String(), result.RSSI, result.LocalName())
-		if strings.Contains(result.LocalName(), "") {
-			if result.AdvertisementPayload.LocalName() == "pokemontinygo" {
-				adapter.StopScan()
-				ch <- result
-			}
+		if result.AdvertisementPayload.LocalName() == "pokemontinygo" {
+			adapter.StopScan()
+			ch <- result
 		}
 	})
 	must("start scan", err)
