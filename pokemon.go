@@ -9,7 +9,7 @@ import (
 
 	"tinygo.org/x/tinyfont/freesans"
 
-	"github.com/conejoninja/badger2040/bt"
+	"github.com/taigrr/pokemon-tinygo/bt"
 
 	"tinygo.org/x/drivers/uc8151"
 	"tinygo.org/x/tinyfont"
