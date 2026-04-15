@@ -1,4 +1,4 @@
-module github.com/conejoninja/badger2040
+module github.com/taigrr/pokemon-tinygo
 
 go 1.26.0
 
