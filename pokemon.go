@@ -1,3 +1,5 @@
+//go:build tinygo
+
 package main
 
 import (
@@ -32,19 +34,8 @@ var spriteBulbasaur []uint8
 //go:embed assets/splash.bin
 var splash []uint8
 
-type Pokemon struct {
-	name     string
-	sprite   []uint8
-	strength string
-	weakness string
-}
-
 func (p *Pokemon) Draw(display uc8151.Device, x, y int16) {
 	display.DrawBuffer(x, y, spriteWidth, spriteHeight, p.sprite)
-}
-
-func (p *Pokemon) WinsAgainst(p2 *Pokemon) bool {
-	return p.strength == p2.weakness
 }
 
 var Pokedex = []Pokemon{
