@@ -16,11 +16,16 @@ func TestParseRatio(t *testing.T) {
 		{name: "valid rectangle", input: "246x128", wantX: 246, wantY: 128},
 		{name: "asymmetric", input: "100x200", wantX: 100, wantY: 200},
 		{name: "uppercase", input: "128X64", wantX: 128, wantY: 64},
+		{name: "trimmed whitespace", input: " 128x64 ", wantX: 128, wantY: 64},
 		{name: "missing separator", input: "128128", wantErr: true},
 		{name: "too many parts", input: "128x64x32", wantErr: true},
 		{name: "empty string", input: "", wantErr: true},
 		{name: "non-numeric x", input: "abcx128", wantErr: true},
 		{name: "non-numeric y", input: "128xabc", wantErr: true},
+		{name: "zero x", input: "0x128", wantErr: true},
+		{name: "zero y", input: "128x0", wantErr: true},
+		{name: "negative x", input: "-1x128", wantErr: true},
+		{name: "negative y", input: "128x-8", wantErr: true},
 	}
 
 	for _, tt := range tests {

@@ -41,7 +41,7 @@ func main() {
 		&ratio,
 		"ratio",
 		"",
-		"set the aspect ratio to predefined values including 'profile' or splash', or a custom value specified in the format of <height>x<width>.",
+		"set the aspect ratio to predefined values including 'profile' or 'splash', or a custom value specified in the format <width>x<height>.",
 	)
 	flag.Parse()
 	if flag.NArg() != 1 {
@@ -251,7 +251,7 @@ func ImgToBytes(x, y int, inputImg *image.Image) []byte {
 }
 
 func ParseRatio(rstr string) (int, int, error) {
-	rstr = strings.ToLower(rstr)
+	rstr = strings.ToLower(strings.TrimSpace(rstr))
 	pixels := strings.Split(rstr, "x")
 	if len(pixels) != 2 {
 		return 0, 0, errors.New("invalid ratio string provided")
@@ -264,6 +264,12 @@ func ParseRatio(rstr string) (int, int, error) {
 	if err != nil {
 		return 0, 0, errors.Join(errors.New("error: could not parse y coordinate count"), err)
 	}
+	if x <= 0 {
+		return 0, 0, errors.New("error: x coordinate count must be greater than zero")
+	}
+	if y <= 0 {
+		return 0, 0, errors.New("error: y coordinate count must be greater than zero")
+	}
 	return x, y, nil
 }
 
@@ -275,7 +281,7 @@ func Usage() {
 	flag.PrintDefaults()
 	fmt.Fprintf(
 		flag.CommandLine.Output(),
-		"\nExamples:\n%s input.png -mode bin -ratio profile\n%s input.jpg -mode rice -ratio 128x128 -disable-dithering -show\n",
+		"\nExamples:\n%s -outmode bin -ratio profile input.png\n%s -outmode rice -ratio 128x128 -disable-dithering -show input.jpg\n",
 		os.Args[0],
 		os.Args[0],
 	)
