@@ -9,6 +9,7 @@ import (
 	"image/color"
 	_ "image/jpeg"
 	_ "image/png"
+	"io"
 	"log"
 	"os"
 	"strconv"
@@ -288,20 +289,27 @@ func Usage() {
 	os.Exit(1)
 }
 
-// PrintImg prints an `*` for each marked bit
+// PrintImg prints an `*` for each marked bit.
 //
-// It writes to stderr so that it doesn't conflict with the base64 output
+// It writes to stderr so that it doesn't conflict with the base64 output.
 func PrintImg(x, y int, imgBits []byte) {
-	for j := 0; j < x; j++ {
-		for i := y - 1; i >= 0; i-- {
-			offset := i*x + j
-			bit := imgBits[offset/8] & (1 << uint(7-offset%8))
-			if bit != 0 {
-				fmt.Fprint(os.Stderr, "*")
+	printImg(os.Stderr, x, y, imgBits)
+}
+
+func printImg(out io.Writer, x, y int, imgBits []byte) {
+	for row := 0; row < y; row++ {
+		for col := 0; col < x; col++ {
+			if pixelIsSet(y, imgBits, col, row) {
+				fmt.Fprint(out, "*")
 			} else {
-				fmt.Fprint(os.Stderr, " ")
+				fmt.Fprint(out, " ")
 			}
 		}
-		fmt.Fprint(os.Stderr, "\n")
+		fmt.Fprint(out, "\n")
 	}
+}
+
+func pixelIsSet(y int, imgBits []byte, col, row int) bool {
+	offset := col*y + row
+	return imgBits[offset/8]&(1<<uint(7-offset%8)) != 0
 }

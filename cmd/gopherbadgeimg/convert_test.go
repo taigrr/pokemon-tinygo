@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"image"
 	"image/color"
 	"os"
@@ -129,5 +130,27 @@ func TestLoadImg_NotFound(t *testing.T) {
 	_, err := LoadImg("/nonexistent/path/to/image.png")
 	if err == nil {
 		t.Error("expected error for nonexistent file")
+	}
+}
+
+func TestPrintImgMatchesBitmapLayout(t *testing.T) {
+	imgBits := []byte{
+		0b10000001, // column 0: rows 0 and 7
+		0b01111110, // column 1: rows 1 through 6
+	}
+
+	var out bytes.Buffer
+	printImg(&out, 2, 8, imgBits)
+
+	want := "* \n" +
+		" *\n" +
+		" *\n" +
+		" *\n" +
+		" *\n" +
+		" *\n" +
+		" *\n" +
+		"* \n"
+	if out.String() != want {
+		t.Fatalf("printImg output:\n%q\nwant:\n%q", out.String(), want)
 	}
 }
