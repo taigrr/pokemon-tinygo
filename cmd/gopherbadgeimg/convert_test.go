@@ -154,3 +154,22 @@ func TestPrintImgMatchesBitmapLayout(t *testing.T) {
 		t.Fatalf("printImg output:\n%q\nwant:\n%q", out.String(), want)
 	}
 }
+
+func TestPrintImgNonByteAligned(t *testing.T) {
+	// Deliberately undersized slice (1 byte for a 3x5=15-bit image) must not
+	// panic: pixelIsSet guards offsets that fall outside the slice.
+	imgBits := make([]byte, 1)
+	var out bytes.Buffer
+	printImg(&out, 3, 5, imgBits)
+	if out.String() != "   \n   \n   \n   \n   \n" {
+		t.Fatalf("unexpected output: %q", out.String())
+	}
+}
+
+func TestImgToBytesNonByteAlignedNoPanic(t *testing.T) {
+	img := image.Image(image.NewRGBA(image.Rect(0, 0, 3, 5)))
+	// 3x5 = 15 bits -> must allocate 2 bytes and not panic.
+	if got := len(ImgToBytes(3, 5, &img)); got != 2 {
+		t.Fatalf("expected 2 bytes for 3x5, got %d", got)
+	}
+}

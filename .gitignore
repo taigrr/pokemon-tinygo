@@ -1,3 +1,4 @@
 /main.uf2
 *.elf
 .DS_Store
+/dist/

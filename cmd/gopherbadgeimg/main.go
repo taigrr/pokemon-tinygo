@@ -202,8 +202,9 @@ func ImgToBytes(x, y int, inputImg *image.Image) []byte {
 
 	// Our e-ink display uses one bit for each pixel, on or off.
 	// Therefore, we need one bit for each pixel.
-	// Since we have a byte slice, and 8 bytes per bit, divide by 8
-	imageBits := make([]byte, x*y/8)
+	// Since we have a byte slice, and 8 bits per byte, divide by 8,
+	// rounding up so non-byte-aligned dimensions still get a full byte.
+	imageBits := make([]byte, (x*y+7)/8)
 
 	// Again, on or off, white or black are our only color options
 	palette := []color.Color{
@@ -234,8 +235,8 @@ func ImgToBytes(x, y int, inputImg *image.Image) []byte {
 
 	// loop over the x axis first, then y as screen updates LTR, top to bottom
 	// (vertical axis must be inner loop) for the badge layout
-	for i := 0; i < x; i++ {
-		for j := 0; j < y; j++ {
+	for i := range x {
+		for j := range y {
 			// grab dithered image point, determine if bit should be 1 or a 0
 			r, g, b, _ := dst.At(x-1-i, j).RGBA()
 			if r+g+b == 0 {
@@ -297,8 +298,8 @@ func PrintImg(x, y int, imgBits []byte) {
 }
 
 func printImg(out io.Writer, x, y int, imgBits []byte) {
-	for row := 0; row < y; row++ {
-		for col := 0; col < x; col++ {
+	for row := range y {
+		for col := range x {
 			if pixelIsSet(y, imgBits, col, row) {
 				fmt.Fprint(out, "*")
 			} else {
@@ -311,5 +312,9 @@ func printImg(out io.Writer, x, y int, imgBits []byte) {
 
 func pixelIsSet(y int, imgBits []byte, col, row int) bool {
 	offset := col*y + row
-	return imgBits[offset/8]&(1<<uint(7-offset%8)) != 0
+	idx := offset / 8
+	if idx < 0 || idx >= len(imgBits) {
+		return false
+	}
+	return imgBits[idx]&(1<<uint(7-offset%8)) != 0
 }

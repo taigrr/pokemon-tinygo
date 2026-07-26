@@ -5,9 +5,18 @@ the 2024 gophercon badger-w (and therefore many TinyGo devices!).
 
 All of the most interesting bits in the code are heavily documented in-line.
 
-Build the tool using go build:
+## Install
 
-`go build .`
+Download a prebuilt binary for your platform from the
+[releases page](https://github.com/taigrr/pokemon-tinygo/releases), or build
+from source:
+
+```bash
+go build .
+```
+
+> The tool lives in a nested Go module, so `go install ...@latest` only resolves
+> `cmd/gopherbadgeimg/vX.Y.Z` tags. Prefer the prebuilt binaries above.
 
 Run it as follows to generate a profile image:
 

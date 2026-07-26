@@ -1,5 +1,8 @@
 # pokemon-tinygo
 
+[![CI](https://github.com/taigrr/pokemon-tinygo/actions/workflows/ci.yml/badge.svg)](https://github.com/taigrr/pokemon-tinygo/actions/workflows/ci.yml)
+[![License: 0BSD](https://img.shields.io/badge/License-0BSD-blue.svg)](LICENSE)
+
 A Pokemon-style game for the [Badger 2040 W](https://shop.pimoroni.com/products/badger-2040-w) e-ink badge, built with [TinyGo](https://tinygo.org/).
 
 Choose from three Pokemon and battle a random opponent on the e-ink display, with optional Bluetooth advertising.
@@ -22,7 +25,7 @@ make flash
 
 ## Image Converter
 
-The `cmd/gopherbadgeimg` tool converts images to the bitmap format used by the e-ink display. See its [README](cmd/gopherbadgeimg/README.md) for details.
+The `cmd/gopherbadgeimg` tool converts images to the bitmap format used by the e-ink display. Download a prebuilt binary from the [releases page](https://github.com/taigrr/pokemon-tinygo/releases), or build it from source. See its [README](cmd/gopherbadgeimg/README.md) for details.
 
 ## Controls
 
@@ -42,3 +45,7 @@ If you see `unable to locate any volume: [RPI-RP2]`, the device needs a reset. H
 mkdir -p /media/RPI-RP2
 mount /dev/sdb1 /media/RPI-RP2
 ```
+
+## License
+
+Released under the [Zero-Clause BSD (0BSD)](LICENSE) license.
