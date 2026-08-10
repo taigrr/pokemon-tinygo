@@ -10,6 +10,10 @@ type Pokemon struct {
 	weakness string
 }
 
+func ValidSelection(selected, choices int) bool {
+	return selected >= 0 && selected < choices
+}
+
 func (pokemon *Pokemon) WinsAgainst(opponent *Pokemon) bool {
 	return pokemon.strength == opponent.weakness
 }
