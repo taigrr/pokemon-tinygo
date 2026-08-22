@@ -88,6 +88,10 @@ func Go(display uc8151.Device) {
 			m.selected = 2
 			m.Draw()
 		case machine.BUTTON_UP.Get():
+			if !ValidSelection(m.selected, len(Pokedex)) {
+				runtime.Gosched()
+				continue
+			}
 			goto confirm // Confirm selection
 		case machine.BUTTON_DOWN.Get():
 			bt.Advertise()
