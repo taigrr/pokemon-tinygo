@@ -48,7 +48,7 @@ jobs:
       - uses: actions/checkout@v7
       - uses: actions/setup-go@v7
         with:
-          go-version-file: go.mod
+          go-version-file: cmd/gopherbadgeimg/go.mod
       - run: go install honnef.co/go/tools/cmd/staticcheck@latest
       - name: gofmt
         run: test -z "$(gofmt -l .)" || { echo 'Run gofmt'; gofmt -l .; exit 1; }
