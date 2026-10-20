@@ -184,6 +184,8 @@ func LoadImg(infile string) (*image.Image, error) {
 	if err != nil {
 		return nil, err
 	}
+	defer f.Close()
+
 	src, _, err := image.Decode(f)
 	if err != nil {
 		return nil, err
