@@ -2,6 +2,8 @@ module github.com/taigrr/pokemon-tinygo
 
 go 1.26.0
 
+toolchain go1.27.3
+
 require (
 	tinygo.org/x/bluetooth v0.15.0
 	tinygo.org/x/drivers v0.35.0
@@ -19,8 +21,8 @@ require (
 	github.com/soypat/seqs v0.0.0-20260125140838-2c1c6b1bd69e // indirect
 	github.com/tinygo-org/cbgo v0.0.4 // indirect
 	github.com/tinygo-org/pio v0.3.0 // indirect
-	golang.org/x/exp v0.0.0-20260718201538-764159d718ef // indirect
-	golang.org/x/sys v0.47.0 // indirect
+	golang.org/x/exp v0.0.0-20261014143641-f0251eb4aa3e // indirect
+	golang.org/x/sys v0.49.0 // indirect
 )
 
 replace tinygo.org/x/drivers => github.com/conejoninja/drivers v0.0.0-20240515082542-5f2645f5444d
