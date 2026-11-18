@@ -274,6 +274,12 @@ func ParseRatio(rstr string) (int, int, error) {
 	if y <= 0 {
 		return 0, 0, errors.New("error: y coordinate count must be greater than zero")
 	}
+	// ImgToBytes allocates an RGBA image (four bytes per pixel) before
+	// packing the bitmap. Divide first so the validation cannot overflow.
+	maxInt := int(^uint(0) >> 1)
+	if x > maxInt/4/y {
+		return 0, 0, errors.New("error: dimensions overflow RGBA image storage")
+	}
 	return x, y, nil
 }
 
