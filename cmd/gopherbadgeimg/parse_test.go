@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -45,5 +46,15 @@ func TestParseRatio(t *testing.T) {
 				t.Errorf("ParseRatio(%q) = (%d, %d), want (%d, %d)", tt.input, gotX, gotY, tt.wantX, tt.wantY)
 			}
 		})
+	}
+}
+
+func TestParseRatioRejectsOverflow(t *testing.T) {
+	maxInt := int(^uint(0) >> 1)
+	for _, dimensions := range [][2]int{{maxInt, 8}, {maxInt/4 + 1, 1}, {1, maxInt/4 + 1}, {maxInt/8 + 1, 8}} {
+		input := fmt.Sprintf("%dx%d", dimensions[0], dimensions[1])
+		if _, _, err := ParseRatio(input); err == nil {
+			t.Errorf("ParseRatio(%q) accepted dimensions that overflow RGBA storage", input)
+		}
 	}
 }
